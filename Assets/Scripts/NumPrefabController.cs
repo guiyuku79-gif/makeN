@@ -19,17 +19,24 @@ public class NumPrefabController : MonoBehaviour
         this.number = number;
         this.gameManager = gameManager;
         textUI.text = number.ToString();
+        gameManager.EquationChange += UpdateUI;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
     private void OnMouseDown()
     {
-        print($"オブジェクトがクリックされたよ！");
-        sr.color = Color.gray;
+        gameManager.InputNumberProcess(index);
+    }
+
+    void UpdateUI()
+    {
+        if(gameManager.currentEquation.firstNumberIndex == index ||
+           gameManager.currentEquation.secondNumberIndex == index)
+        {
+            sr.color = Color.gray;
+        }
+        else
+        {
+            sr.color = Color.white;
+        }
     }
 }
