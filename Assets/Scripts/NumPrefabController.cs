@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 public class NumPrefabController : MonoBehaviour
 {
     int index;
-    int number;
+    Fraction number;
 
     GameManager gameManager;
 
@@ -13,7 +13,7 @@ public class NumPrefabController : MonoBehaviour
     [SerializeField] SpriteRenderer sr;
 
 
-    public  void Init(int index, int number,GameManager gameManager)
+    public  void Init(int index, Fraction number,GameManager gameManager)
     {
         this.index = index;
         this.number = number;

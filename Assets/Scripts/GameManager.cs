@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class GameManager : MonoBehaviour
 {
 
-    private List<int> initNumbers = new List<int>{};
+    private List<Fraction> initNumbers = new List<Fraction>{};
 
     [SerializeField] GameObject NumbersGameObject;
     [SerializeField] Vector3 initNumberPos;
@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     {
         for(int i = 0; i < 4; i++)
         {
-            initNumbers.Add(Random.Range(1,10));
+            initNumbers.Add(new Fraction( Random.Range(1,10), 1));
         }
 
         CreateNumberPrefabs();
