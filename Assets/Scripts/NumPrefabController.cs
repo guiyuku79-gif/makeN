@@ -39,4 +39,9 @@ public class NumPrefabController : MonoBehaviour
             sr.color = Color.white;
         }
     }
+
+    void OnDisable()
+    {
+        gameManager.EquationChange -= UpdateUI;
+    }
 }

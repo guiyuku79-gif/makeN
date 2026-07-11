@@ -40,4 +40,6 @@ public class OperatorController : MonoBehaviour
             sr.color = Color.white;
         }
     }
+
+
 }

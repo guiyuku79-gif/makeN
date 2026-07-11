@@ -101,6 +101,52 @@ public class GameManager : MonoBehaviour
         EquationUI.text = firstNumber + " " + 
                           currentEquation.selectedOperator + " " + 
                           secondNumber; 
+
+        if(firstNumber != "" && secondNumber != "" && currentEquation.selectedOperator != "")
+        {
+            Calculation();
+        }
+    }
+
+    void Calculation()
+    {
+
+        //分数リストに新しいものを作成
+        List<Fraction> newFractions = new List<Fraction>{};
+        for( int i = 0; i < Numbers.Count; i++)
+        {
+            if( i != currentEquation.firstNumberIndex && i != currentEquation.secondNumberIndex)
+            {
+                newFractions.Add(new Fraction(Numbers[i].Numerator,Numbers[i].Denominator));
+            }
+        }
+        if(currentEquation.selectedOperator == "+")newFractions.Add(Numbers[currentEquation.firstNumberIndex]+Numbers[currentEquation.secondNumberIndex]);
+        if(currentEquation.selectedOperator == "-")newFractions.Add(Numbers[currentEquation.firstNumberIndex]-Numbers[currentEquation.secondNumberIndex]);
+        if(currentEquation.selectedOperator == "*")newFractions.Add(Numbers[currentEquation.firstNumberIndex]*Numbers[currentEquation.secondNumberIndex]);
+        if(currentEquation.selectedOperator == "/")newFractions.Add(Numbers[currentEquation.firstNumberIndex]/Numbers[currentEquation.secondNumberIndex]);
+
+
+        //もともとあるのを削除
+
+        foreach (GameObject obj in NumberObjects)
+        {
+            Destroy(obj);
+        }
+        NumberObjects.Clear();
+
+        Numbers = newFractions;
+
+        currentEquation.firstNumberIndex = -1;
+        currentEquation.secondNumberIndex = -1;
+        currentEquation.selectedOperator = "";
+
+        for(int i = 0;i< Numbers.Count; i++)
+        {
+            GameObject numbersPrefab = Instantiate(NumbersGameObject,initNumberPos+ i * NumbersInterval,Quaternion.identity);
+            numbersPrefab.GetComponent<NumPrefabController>().Init(i,Numbers[i],this);
+            NumberObjects.Add(numbersPrefab);
+        }
+
     }
 
 }
