@@ -5,7 +5,6 @@ public class OperatorController : MonoBehaviour
     int index;
     Fraction number;
 
-    [SerializeField] GameManager gameManager;
     [SerializeField] SpriteRenderer sr;
 
     [SerializeField] string operatorName;
@@ -14,7 +13,7 @@ public class OperatorController : MonoBehaviour
 
     void Start()
     {
-        gameManager.EquationChange += UpdateUI;        
+        GameManager.Instance.EquationChange += UpdateUI;        
     }
 
     // Update is called once per frame
@@ -25,13 +24,13 @@ public class OperatorController : MonoBehaviour
     
     private void OnMouseDown()
     {
-        gameManager.InputOperatorProcess(operatorName);
+        GameManager.Instance.InputOperatorProcess(operatorName);
 
     }
 
     void UpdateUI()
     {
-        if(gameManager.currentEquation.selectedOperator == operatorName)
+        if(GameManager.Instance.currentEquation.selectedOperator == operatorName)
         {
             sr.color = Color.gray;
         }

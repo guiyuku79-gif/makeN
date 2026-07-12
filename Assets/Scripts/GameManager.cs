@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Vector3 initNumberPos;
     [SerializeField] Vector3 NumbersInterval;
 
+    [SerializeField] TextMeshProUGUI OrderUI;
     [SerializeField] TextMeshProUGUI EquationUI;
 
     //現在の入力状況を示す
@@ -30,6 +31,15 @@ public class GameManager : MonoBehaviour
 
     public event Action EquationChange;
 
+    int targetNumber;
+
+    public static GameManager Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
 
     //現在の状態を保存
     void Start()
@@ -37,6 +47,7 @@ public class GameManager : MonoBehaviour
         currentEquation.firstNumberIndex = -1;
         currentEquation.secondNumberIndex = -1;
         currentEquation.selectedOperator = "";
+        InitNumbers.Clear();
         for(int i = 0; i < 4; i++)
         {
             int seed  = UnityEngine.Random.Range(1,10);
@@ -45,6 +56,11 @@ public class GameManager : MonoBehaviour
         }
 
         CreateNumberPrefabs();
+
+        //仮の値
+        targetNumber = UnityEngine.Random.Range(1,10);
+        OrderUI.text = "Make" + targetNumber.ToString();
+
     }
 
     void CreateNumberPrefabs()
@@ -52,7 +68,7 @@ public class GameManager : MonoBehaviour
         for(int i = 0;i< 4; i++)
         {
             GameObject numbersPrefab = Instantiate(NumbersGameObject,initNumberPos+ i * NumbersInterval,Quaternion.identity);
-            numbersPrefab.GetComponent<NumPrefabController>().Init(i,Numbers[i],this);
+            numbersPrefab.GetComponent<NumPrefabController>().Init(i,Numbers[i]);
             NumberObjects.Add(numbersPrefab);
         }
     }
@@ -110,41 +126,44 @@ public class GameManager : MonoBehaviour
 
     void Calculation()
     {
+        //secondの場所の分数を変更
+        if(currentEquation.selectedOperator == "+") Numbers[currentEquation.secondNumberIndex] = Numbers[currentEquation.firstNumberIndex]+Numbers[currentEquation.secondNumberIndex];
+        if(currentEquation.selectedOperator == "-") Numbers[currentEquation.secondNumberIndex] = Numbers[currentEquation.firstNumberIndex]-Numbers[currentEquation.secondNumberIndex];
+        if(currentEquation.selectedOperator == "*") Numbers[currentEquation.secondNumberIndex] = Numbers[currentEquation.firstNumberIndex]*Numbers[currentEquation.secondNumberIndex];
+        if(currentEquation.selectedOperator == "/") Numbers[currentEquation.secondNumberIndex] = Numbers[currentEquation.firstNumberIndex]/Numbers[currentEquation.secondNumberIndex];
+        NumberObjects[currentEquation.secondNumberIndex].GetComponent<NumPrefabController>().UpdateFraction(Numbers[currentEquation.secondNumberIndex]);
 
-        //分数リストに新しいものを作成
-        List<Fraction> newFractions = new List<Fraction>{};
-        for( int i = 0; i < Numbers.Count; i++)
-        {
-            if( i != currentEquation.firstNumberIndex && i != currentEquation.secondNumberIndex)
-            {
-                newFractions.Add(new Fraction(Numbers[i].Numerator,Numbers[i].Denominator));
-            }
-        }
-        if(currentEquation.selectedOperator == "+")newFractions.Add(Numbers[currentEquation.firstNumberIndex]+Numbers[currentEquation.secondNumberIndex]);
-        if(currentEquation.selectedOperator == "-")newFractions.Add(Numbers[currentEquation.firstNumberIndex]-Numbers[currentEquation.secondNumberIndex]);
-        if(currentEquation.selectedOperator == "*")newFractions.Add(Numbers[currentEquation.firstNumberIndex]*Numbers[currentEquation.secondNumberIndex]);
-        if(currentEquation.selectedOperator == "/")newFractions.Add(Numbers[currentEquation.firstNumberIndex]/Numbers[currentEquation.secondNumberIndex]);
-
-
-        //もともとあるのを削除
-
-        foreach (GameObject obj in NumberObjects)
-        {
-            Destroy(obj);
-        }
-        NumberObjects.Clear();
-
-        Numbers = newFractions;
+        //firstの場所を削除
+        GameObject obj = NumberObjects[currentEquation.firstNumberIndex];
+        Destroy(obj);
+        NumberObjects[currentEquation.firstNumberIndex] = null;
+        Numbers[currentEquation.firstNumberIndex] = new Fraction(-9999,1);
 
         currentEquation.firstNumberIndex = -1;
         currentEquation.secondNumberIndex = -1;
         currentEquation.selectedOperator = "";
 
-        for(int i = 0;i< Numbers.Count; i++)
+        EquationChange.Invoke();
+
+        CheckCorrect();
+        if( Numbers.Count == 1 && Numbers[0] == new Fraction(targetNumber, 1))
         {
-            GameObject numbersPrefab = Instantiate(NumbersGameObject,initNumberPos+ i * NumbersInterval,Quaternion.identity);
-            numbersPrefab.GetComponent<NumPrefabController>().Init(i,Numbers[i],this);
-            NumberObjects.Add(numbersPrefab);
+        }
+
+    }
+
+    void CheckCorrect()
+    {
+        List<Fraction> restNumbers = new List<Fraction>{};
+        for(int i = 3; i >= 0; i--)
+        {
+            if(Numbers[i] != new Fraction(-9999,1)) restNumbers.Add(Numbers[i]);
+        }
+
+        if(restNumbers.Count == 1 && restNumbers[0] == new Fraction(targetNumber, 1))
+        {
+            Debug.Log("正解!");
+            EquationUI.text = "You can make " + targetNumber.ToString();            
         }
 
     }

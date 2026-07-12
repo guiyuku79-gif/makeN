@@ -7,30 +7,34 @@ public class NumPrefabController : MonoBehaviour
     int index;
     Fraction number;
 
-    GameManager gameManager;
 
     [SerializeField] TextMeshProUGUI textUI;
     [SerializeField] SpriteRenderer sr;
 
 
-    public  void Init(int index, Fraction number,GameManager gameManager)
-    {
+    public  void Init(int index, Fraction number){
         this.index = index;
         this.number = number;
-        this.gameManager = gameManager;
         textUI.text = number.ToString();
-        gameManager.EquationChange += UpdateUI;
+        GameManager.Instance.EquationChange += UpdateUI;
     }
+
+    public void UpdateFraction(Fraction fraction)
+    {
+        this.number = fraction;
+        textUI.text = number.ToString();
+    }
+
 
     private void OnMouseDown()
     {
-        gameManager.InputNumberProcess(index);
+        GameManager.Instance.InputNumberProcess(index);
     }
 
     void UpdateUI()
     {
-        if(gameManager.currentEquation.firstNumberIndex == index ||
-           gameManager.currentEquation.secondNumberIndex == index)
+        if(GameManager.Instance.currentEquation.firstNumberIndex == index ||
+           GameManager.Instance.currentEquation.secondNumberIndex == index)
         {
             sr.color = Color.gray;
         }
@@ -42,6 +46,6 @@ public class NumPrefabController : MonoBehaviour
 
     void OnDisable()
     {
-        gameManager.EquationChange -= UpdateUI;
+        GameManager.Instance.EquationChange -= UpdateUI;
     }
 }
