@@ -272,7 +272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e49d536cd979ff429235fd34d9cac52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OperatorController
-  gameManager: {fileID: 666337213}
   sr: {fileID: 2983313}
   operatorName: '*'
 --- !u!1 &134862022
@@ -961,7 +960,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e49d536cd979ff429235fd34d9cac52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OperatorController
-  gameManager: {fileID: 666337213}
   sr: {fileID: 566132201}
   operatorName: '-'
 --- !u!1 &619394800
@@ -1337,7 +1335,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 923695976}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 666337213}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: Reset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &923695976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1632,7 +1642,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e49d536cd979ff429235fd34d9cac52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OperatorController
-  gameManager: {fileID: 666337213}
   sr: {fileID: 997504930}
   operatorName: +
 --- !u!1 &1027371044
@@ -2714,7 +2723,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e49d536cd979ff429235fd34d9cac52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OperatorController
-  gameManager: {fileID: 666337213}
   sr: {fileID: 1818207305}
   operatorName: /
 --- !u!1 &1933877469

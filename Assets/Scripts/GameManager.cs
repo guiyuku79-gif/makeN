@@ -168,4 +168,26 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void Reset()
+    {
+        foreach(GameObject gameObject in NumberObjects)
+        {
+            Destroy(gameObject);
+        }
+        NumberObjects.Clear();
+        Numbers.Clear();
+
+        for(int i = 0; i < 4; i++)
+        {
+            Numbers.Add(new Fraction(InitNumbers[i], 1));
+        }
+        CreateNumberPrefabs();
+
+        currentEquation.firstNumberIndex = -1;
+        currentEquation.secondNumberIndex = -1;
+        currentEquation.selectedOperator = "";
+
+        EquationUI.text = "";
+
+    }
 }
