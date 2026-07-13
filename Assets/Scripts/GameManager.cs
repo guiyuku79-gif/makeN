@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using TMPro;
 
@@ -17,6 +18,16 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI OrderUI;
     [SerializeField] TextMeshProUGUI EquationUI;
+
+    //解答のUI用
+    [SerializeField] Image AnswerImage;
+    [SerializeField] TextMeshProUGUI AnswerUI;
+    [SerializeField] Image WaitBarImage;
+
+    bool isTimeOut;
+    float leftTime;
+    [SerializeField] float MaxTime = 180f;
+
 
     //現在の入力状況を示す
     public struct CurrentEquation
@@ -48,6 +59,9 @@ public class GameManager : MonoBehaviour
         currentEquation.firstNumberIndex = -1;
         currentEquation.secondNumberIndex = -1;
         currentEquation.selectedOperator = "";
+        leftTime = MaxTime;
+        isTimeOut = false;
+
         InitNumbers.Clear();
         for(int i = 0; i < 4; i++)
         {
@@ -74,6 +88,21 @@ public class GameManager : MonoBehaviour
         Debug.Log(howToMakeAnswer);
 
 
+    }
+
+    void Update()
+    {
+        if (!isTimeOut)
+        {
+            leftTime -= Time.deltaTime;
+            WaitBarImage.fillAmount = leftTime / MaxTime;
+            if(leftTime <= 0)
+            {
+                isTimeOut = true;
+                AnswerImage.color = Color.white;
+
+            }
+        } 
     }
 
     void CreateNumberPrefabs()
@@ -214,7 +243,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         NumberObjects.Clear();
-        
+
         currentEquation.firstNumberIndex = -1;
         currentEquation.secondNumberIndex = -1;
         currentEquation.selectedOperator = "";
@@ -245,4 +274,10 @@ public class GameManager : MonoBehaviour
         Debug.Log(howToMakeAnswer);        
     }
 
+    public void DisplayAnswer()
+    {
+        if(!isTimeOut) return;
+
+        AnswerUI.text = howToMakeAnswer;
+    }
 }
