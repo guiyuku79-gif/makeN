@@ -114,7 +114,7 @@ public class ExpressionSearcher
                 }
             case 2:
                 {
-                    return $"{n[0]}{opNames[op1]}(({n[1]}{opNames[op2]}{n[2]}){opNames[op3]}{n[3]})s";
+                    return $"{n[0]}{opNames[op1]}(({n[1]}{opNames[op2]}{n[2]}){opNames[op3]}{n[3]})";
                 }
             case 3:
                 {

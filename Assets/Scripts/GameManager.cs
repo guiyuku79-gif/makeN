@@ -181,6 +181,7 @@ public class GameManager : MonoBehaviour
 
     }
 
+    //計算をしたものを戻す
     public void Reset()
     {
         foreach(GameObject gameObject in NumberObjects)
@@ -203,4 +204,45 @@ public class GameManager : MonoBehaviour
         EquationUI.text = "";
 
     }
+
+    //新しい問題を作る
+    public void CreateNewQuestion()
+    {
+
+        foreach( GameObject gameObject in NumberObjects)
+        {
+            Destroy(gameObject);
+        }
+        NumberObjects.Clear();
+        
+        currentEquation.firstNumberIndex = -1;
+        currentEquation.secondNumberIndex = -1;
+        currentEquation.selectedOperator = "";
+        InitNumbers.Clear();
+        Numbers.Clear();
+        for(int i = 0; i < 4; i++)
+        {
+            int seed  = UnityEngine.Random.Range(1,10);
+            InitNumbers.Add(seed);
+            Numbers.Add(new Fraction(seed, 1));
+        }
+
+        CreateNumberPrefabs();
+
+
+
+        Fraction[] numbersForEvluator =
+        {
+            new Fraction(InitNumbers[0],1),
+            new Fraction(InitNumbers[1],1),
+            new Fraction(InitNumbers[2],1),
+            new Fraction(InitNumbers[3],1)
+        };
+
+        ExpressionSearcher expressionSearcher = new ExpressionSearcher();
+        (targetNumber,howToMakeAnswer) = expressionSearcher.Search(numbersForEvluator);
+        OrderUI.text = "Make" + targetNumber.ToString();
+        Debug.Log(howToMakeAnswer);        
+    }
+
 }
