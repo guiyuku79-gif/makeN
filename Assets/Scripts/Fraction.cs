@@ -94,12 +94,6 @@ public readonly struct Fraction : IEquatable<Fraction>
         return HashCode.Combine(Numerator, Denominator);
     }
 
-    // doubleへ変換
-    public double ToDouble()
-    {
-        return (double)Numerator / Denominator;
-    }
-
     public override string ToString()
     {
         if(Denominator == 1)

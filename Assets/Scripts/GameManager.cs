@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     public event Action EquationChange;
 
     int targetNumber;
+    string howToMakeAnswer;
 
     public static GameManager Instance;
 
@@ -57,9 +58,21 @@ public class GameManager : MonoBehaviour
 
         CreateNumberPrefabs();
 
-        //仮の値
-        targetNumber = UnityEngine.Random.Range(1,10);
+
+
+        Fraction[] numbersForEvluator =
+        {
+            new Fraction(InitNumbers[0],1),
+            new Fraction(InitNumbers[1],1),
+            new Fraction(InitNumbers[2],1),
+            new Fraction(InitNumbers[3],1)
+        };
+
+        ExpressionSearcher expressionSearcher = new ExpressionSearcher();
+        (targetNumber,howToMakeAnswer) = expressionSearcher.Search(numbersForEvluator);
         OrderUI.text = "Make" + targetNumber.ToString();
+        Debug.Log(howToMakeAnswer);
+
 
     }
 
