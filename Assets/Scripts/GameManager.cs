@@ -56,36 +56,37 @@ public class GameManager : MonoBehaviour
     //現在の状態を保存
     void Start()
     {
-        currentEquation.firstNumberIndex = -1;
-        currentEquation.secondNumberIndex = -1;
-        currentEquation.selectedOperator = "";
-        leftTime = MaxTime;
-        isTimeOut = false;
+        CreateNewQuestion();
+        // currentEquation.firstNumberIndex = -1;
+        // currentEquation.secondNumberIndex = -1;
+        // currentEquation.selectedOperator = "";
+        // leftTime = MaxTime;
+        // isTimeOut = false;
 
-        InitNumbers.Clear();
-        for(int i = 0; i < 4; i++)
-        {
-            int seed  = UnityEngine.Random.Range(1,10);
-            InitNumbers.Add(seed);
-            Numbers.Add(new Fraction(seed, 1));
-        }
+        // InitNumbers.Clear();
+        // for(int i = 0; i < 4; i++)
+        // {
+        //     int seed  = UnityEngine.Random.Range(1,10);
+        //     InitNumbers.Add(seed);
+        //     Numbers.Add(new Fraction(seed, 1));
+        // }
 
-        CreateNumberPrefabs();
+        // CreateNumberPrefabs();
 
 
 
-        Fraction[] numbersForEvluator =
-        {
-            new Fraction(InitNumbers[0],1),
-            new Fraction(InitNumbers[1],1),
-            new Fraction(InitNumbers[2],1),
-            new Fraction(InitNumbers[3],1)
-        };
+        // Fraction[] numbersForEvluator =
+        // {
+        //     new Fraction(InitNumbers[0],1),
+        //     new Fraction(InitNumbers[1],1),
+        //     new Fraction(InitNumbers[2],1),
+        //     new Fraction(InitNumbers[3],1)
+        // };
 
-        ExpressionSearcher expressionSearcher = new ExpressionSearcher();
-        (targetNumber,howToMakeAnswer) = expressionSearcher.Search(numbersForEvluator);
-        OrderUI.text = "Make" + targetNumber.ToString();
-        Debug.Log(howToMakeAnswer);
+        // ExpressionSearcher expressionSearcher = new ExpressionSearcher();
+        // (targetNumber,howToMakeAnswer) = expressionSearcher.Search(numbersForEvluator);
+        // OrderUI.text = "Make" + targetNumber.ToString();
+        // Debug.Log(howToMakeAnswer);
 
 
     }
@@ -247,6 +248,12 @@ public class GameManager : MonoBehaviour
         currentEquation.firstNumberIndex = -1;
         currentEquation.secondNumberIndex = -1;
         currentEquation.selectedOperator = "";
+
+        leftTime = MaxTime;
+        isTimeOut = false;
+        AnswerImage.color = new Color32(200,200,200,255);
+        AnswerUI.text = "Answer";
+
         InitNumbers.Clear();
         Numbers.Clear();
         for(int i = 0; i < 4; i++)
@@ -274,6 +281,7 @@ public class GameManager : MonoBehaviour
         Debug.Log(howToMakeAnswer);        
     }
 
+    //一定時間後に答えを表示する
     public void DisplayAnswer()
     {
         if(!isTimeOut) return;
