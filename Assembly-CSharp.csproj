@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\ClickSample.cs" />
+    <Compile Include="Assets\Scripts\EffectManager.cs" />
     <Compile Include="Assets\Scripts\NumPrefabController.cs" />
     <Compile Include="Assets\Scripts\OperatorController.cs" />
     <Compile Include="Assets\Scripts\Fraction.cs" />

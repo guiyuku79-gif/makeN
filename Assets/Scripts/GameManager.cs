@@ -57,36 +57,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         CreateNewQuestion();
-        // currentEquation.firstNumberIndex = -1;
-        // currentEquation.secondNumberIndex = -1;
-        // currentEquation.selectedOperator = "";
-        // leftTime = MaxTime;
-        // isTimeOut = false;
-
-        // InitNumbers.Clear();
-        // for(int i = 0; i < 4; i++)
-        // {
-        //     int seed  = UnityEngine.Random.Range(1,10);
-        //     InitNumbers.Add(seed);
-        //     Numbers.Add(new Fraction(seed, 1));
-        // }
-
-        // CreateNumberPrefabs();
-
-
-
-        // Fraction[] numbersForEvluator =
-        // {
-        //     new Fraction(InitNumbers[0],1),
-        //     new Fraction(InitNumbers[1],1),
-        //     new Fraction(InitNumbers[2],1),
-        //     new Fraction(InitNumbers[3],1)
-        // };
-
-        // ExpressionSearcher expressionSearcher = new ExpressionSearcher();
-        // (targetNumber,howToMakeAnswer) = expressionSearcher.Search(numbersForEvluator);
-        // OrderUI.text = "Make" + targetNumber.ToString();
-        // Debug.Log(howToMakeAnswer);
 
 
     }
@@ -169,6 +139,17 @@ public class GameManager : MonoBehaviour
 
     void Calculation()
     {
+        //0で割っているなら戻す
+        if(Numbers[currentEquation.secondNumberIndex] == new Fraction(0,1) && currentEquation.selectedOperator == "/")
+        {
+            currentEquation.firstNumberIndex = -1;
+            currentEquation.secondNumberIndex = -1;
+            currentEquation.selectedOperator = "";
+
+            EquationChange.Invoke();
+            return;
+            
+        }
         //secondの場所の分数を変更
         if(currentEquation.selectedOperator == "+") Numbers[currentEquation.secondNumberIndex] = Numbers[currentEquation.firstNumberIndex]+Numbers[currentEquation.secondNumberIndex];
         if(currentEquation.selectedOperator == "-") Numbers[currentEquation.secondNumberIndex] = Numbers[currentEquation.firstNumberIndex]-Numbers[currentEquation.secondNumberIndex];
@@ -189,9 +170,6 @@ public class GameManager : MonoBehaviour
         EquationChange.Invoke();
 
         CheckCorrect();
-        if( Numbers.Count == 1 && Numbers[0] == new Fraction(targetNumber, 1))
-        {
-        }
 
     }
 
@@ -206,7 +184,8 @@ public class GameManager : MonoBehaviour
         if(restNumbers.Count == 1 && restNumbers[0] == new Fraction(targetNumber, 1))
         {
             Debug.Log("正解!");
-            EquationUI.text = "You can make " + targetNumber.ToString();            
+            EquationUI.text = "You can make " + targetNumber.ToString();
+            GetComponent<EffectManager>().GameOverEffect(NumberObjects);            
         }
 
     }
@@ -253,6 +232,7 @@ public class GameManager : MonoBehaviour
         isTimeOut = false;
         AnswerImage.color = new Color32(200,200,200,255);
         AnswerUI.text = "Answer";
+        EquationUI.text = "";
 
         InitNumbers.Clear();
         Numbers.Clear();
