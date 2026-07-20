@@ -42,8 +42,13 @@ public class EffectManager : MonoBehaviour
         GameOverEffectImage.transform.position = pos;
         for( int i = 0; i <= 25; i++)
         {
-            GameOverEffectImage.fillAmount = i * 0.04f;
+            GameOverEffectImage.fillAmount = i * i / 625f;
             yield return null;
         }
+    }
+
+    public void ResetUI()
+    {
+        GameOverEffectImage.fillAmount = 0f;
     }
 }

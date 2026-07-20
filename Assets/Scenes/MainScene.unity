@@ -1301,7 +1301,7 @@ MonoBehaviour:
   AnswerImage: {fileID: 1458478228}
   AnswerUI: {fileID: 829482280}
   WaitBarImage: {fileID: 970464207}
-  MaxTime: 10
+  MaxTime: 180
 --- !u!114 &666337214
 MonoBehaviour:
   m_ObjectHideFlags: 0

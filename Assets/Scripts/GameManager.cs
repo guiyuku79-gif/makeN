@@ -184,7 +184,7 @@ public class GameManager : MonoBehaviour
         if(restNumbers.Count == 1 && restNumbers[0] == new Fraction(targetNumber, 1))
         {
             Debug.Log("正解!");
-            EquationUI.text = "You can make " + targetNumber.ToString();
+            EquationUI.text = "Correct!";
             GetComponent<EffectManager>().GameOverEffect(NumberObjects);            
         }
 
@@ -233,6 +233,8 @@ public class GameManager : MonoBehaviour
         AnswerImage.color = new Color32(200,200,200,255);
         AnswerUI.text = "Answer";
         EquationUI.text = "";
+        GetComponent<EffectManager>().ResetUI();
+        isAnswerOpened = false;
 
         InitNumbers.Clear();
         Numbers.Clear();
@@ -261,11 +263,22 @@ public class GameManager : MonoBehaviour
         Debug.Log(howToMakeAnswer);        
     }
 
+    bool isAnswerOpened = false;
     //一定時間後に答えを表示する
     public void DisplayAnswer()
     {
         if(!isTimeOut) return;
+        if (isAnswerOpened)
+        {
+            AnswerUI.text = "Answer";
+            isAnswerOpened = false;
+        }
+        else
+        {
+            AnswerUI.text = howToMakeAnswer;
+            isAnswerOpened = true;
 
-        AnswerUI.text = howToMakeAnswer;
+        }
+
     }
 }
