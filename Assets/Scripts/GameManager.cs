@@ -238,16 +238,27 @@ public class GameManager : MonoBehaviour
 
         InitNumbers.Clear();
         Numbers.Clear();
-        for(int i = 0; i < 4; i++)
+
+        if(TitleManager.inputNumbers.Count == 0)
         {
-            int seed  = UnityEngine.Random.Range(1,10);
-            InitNumbers.Add(seed);
-            Numbers.Add(new Fraction(seed, 1));
+            for(int i = 0; i < 4; i++)
+            {
+                int seed  = UnityEngine.Random.Range(1,10);
+                InitNumbers.Add(seed);
+                Numbers.Add(new Fraction(seed, 1));
+            }            
+        }
+        else
+        {
+            for(int i = 0; i < 4; i++)
+            {
+                InitNumbers.Add(TitleManager.inputNumbers[i]);
+                Numbers.Add(new Fraction(TitleManager.inputNumbers[i], 1));
+            }             
+            TitleManager.inputNumbers = new List<int>();
         }
 
         CreateNumberPrefabs();
-
-
 
         Fraction[] numbersForEvluator =
         {
