@@ -45,6 +45,8 @@ public class EffectManager : MonoBehaviour
             GameOverEffectImage.fillAmount = i * i / 625f;
             yield return null;
         }
+
+        GetComponent<Correct>().UpdateCorrectUI();
     }
 
     public void ResetUI()

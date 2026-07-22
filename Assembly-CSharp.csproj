@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\MainSceneManager.cs" />
     <Compile Include="Assets\Scripts\OperatorController.cs" />
     <Compile Include="Assets\Scripts\SaveData.cs" />
+    <Compile Include="Assets\Scripts\Correct.cs" />
     <Compile Include="Assets\Scripts\Fraction.cs" />
     <Compile Include="Assets\Scripts\ExpressionSearcher.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
