@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Image WaitBarImage;
 
     bool isTimeOut;
+
+    bool isSolvedThisQuestion;
     float leftTime;
     [SerializeField] float MaxTime = 180f;
 
@@ -183,9 +185,15 @@ public class GameManager : MonoBehaviour
 
         if(restNumbers.Count == 1 && restNumbers[0] == new Fraction(targetNumber, 1))
         {
-            Debug.Log("正解!");
+
             EquationUI.text = "Correct!";
-            GetComponent<EffectManager>().GameOverEffect(NumberObjects);            
+            GetComponent<EffectManager>().GameOverEffect(NumberObjects);
+
+            if(!isSolvedThisQuestion)
+            {
+                isSolvedThisQuestion = true;
+                SaveData.AddSolvedCount();
+            }            
         }
 
     }
@@ -235,6 +243,7 @@ public class GameManager : MonoBehaviour
         EquationUI.text = "";
         GetComponent<EffectManager>().ResetUI();
         isAnswerOpened = false;
+        isSolvedThisQuestion = false;
 
         InitNumbers.Clear();
         Numbers.Clear();
