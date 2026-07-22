@@ -20,4 +20,9 @@ public static class SaveData
         SolvedCount++;
         UnityroomApiClient.Instance.SendScore(1, SolvedCount, ScoreboardWriteMode.HighScoreDesc);
     }
+
+    public static void ClearScore()
+    {
+        SolvedCount = 0;
+    }
 }

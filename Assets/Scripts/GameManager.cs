@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -75,6 +76,11 @@ public class GameManager : MonoBehaviour
 
             }
         } 
+
+        if(Keyboard.current.leftShiftKey.isPressed && Keyboard.current.rKey.wasPressedThisFrame)
+        {
+            SaveData.ClearScore();
+        }
     }
 
     void CreateNumberPrefabs()
