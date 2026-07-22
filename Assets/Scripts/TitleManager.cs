@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using System.Linq;
 using TMPro;
 
@@ -19,10 +17,14 @@ public class TitleManager : MonoBehaviour
     }
 
     public static List<int> inputNumbers = new List<int>();
+
+    public static bool isDesignedMode = false;
     public void StartRandomMode()
     {
         inputNumbers = new List<int>();
-;
+
+        isDesignedMode = false;
+
         SceneManager.LoadScene("MainScene");
     }
 
@@ -47,6 +49,8 @@ public class TitleManager : MonoBehaviour
         {
             if(i <= 0 || 10 <= i) return;
         }
+
+        isDesignedMode = true;
 
         SceneManager.LoadScene("MainScene");
     }

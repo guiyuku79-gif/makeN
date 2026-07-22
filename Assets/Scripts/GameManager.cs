@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
@@ -192,7 +191,11 @@ public class GameManager : MonoBehaviour
             if(!isSolvedThisQuestion)
             {
                 isSolvedThisQuestion = true;
-                SaveData.AddSolvedCount();
+                if (!TitleManager.isDesignedMode) //RandomModeでのみ加算を行う
+                {
+                    SaveData.AddSolvedCount();   
+                }
+
             }            
         }
 

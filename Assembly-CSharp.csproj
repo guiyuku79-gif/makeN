@@ -56,6 +56,7 @@
     <Compile Include="Assets\Scripts\EffectManager.cs" />
     <Compile Include="Assets\Scripts\NumPrefabController.cs" />
     <Compile Include="Assets\Scripts\TitleManager.cs" />
+    <Compile Include="Assets\Scripts\NextButton.cs" />
     <Compile Include="Assets\Scripts\MainSceneManager.cs" />
     <Compile Include="Assets\Scripts\OperatorController.cs" />
     <Compile Include="Assets\Scripts\SaveData.cs" />
