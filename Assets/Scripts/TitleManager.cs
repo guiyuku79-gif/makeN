@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class TitleManager : MonoBehaviour
 {
@@ -53,5 +54,14 @@ public class TitleManager : MonoBehaviour
         isDesignedMode = true;
 
         SceneManager.LoadScene("MainScene");
+    }
+
+    //random_only用の指示
+    void Update()
+    {
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            StartRandomMode();
+        }
     }
 }
