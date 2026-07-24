@@ -28,30 +28,30 @@ public class TitleManager : MonoBehaviour
         SceneManager.LoadScene("MainScene");
     }
 
-    public void StartDesignedMode()
+    public void StartSelectMode()
     {
 
-        List<string> strings = inputField.text.Split(" ").ToList();
+        // List<string> strings = inputField.text.Split(" ").ToList();
 
-        inputNumbers = new List<int>();
+        // inputNumbers = new List<int>();
 
-        foreach (string s in strings)
-        {
-            if (int.TryParse(s, out int value))
-            {
-                inputNumbers.Add(value);
-            }
-        } 
+        // foreach (string s in strings)
+        // {
+        //     if (int.TryParse(s, out int value))
+        //     {
+        //         inputNumbers.Add(value);
+        //     }
+        // } 
 
-        if(inputNumbers.Count != 4) return;
+        // if(inputNumbers.Count != 4) return;
 
-        foreach (int i in inputNumbers)
-        {
-            if(i <= 0 || 10 <= i) return;
-        }
+        // foreach (int i in inputNumbers)
+        // {
+        //     if(i <= 0 || 10 <= i) return;
+        // }
 
         isDesignedMode = true;
 
-        SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("SelectScene");
     }
 }
